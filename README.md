@@ -1,4 +1,4 @@
-AI Python Code Reviewer
+**AI Python Code Reviewer**
 
 * This project is an AI-powered Python code reviewer built with Streamlit and Google Gemini AI, designed by Manaswini Sharma to analyze Python code, identify potential issues, and suggest improvements.
 

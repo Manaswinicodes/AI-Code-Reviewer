@@ -1,55 +1,53 @@
+import openai
 import streamlit as st
-import google.generativeai as genai
-import os
-from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
+# Set API key for OpenAI
+openai.api_key = 'your-api-key'
 
-st.set_page_config(
-    page_title="AI Python Code Reviewer",
-    page_icon="🚀",
-    layout="wide"
+# Function to generate prompt based on review type
+def get_review_prompt(code, review_type):
+    prompts = {
+        'syntax': f"Please analyze the following Python code for any syntax errors and suggest improvements:\n\n{code}",
+        'optimization': f"Please analyze the following Python code and suggest optimizations for performance improvements:\n\n{code}",
+        'best_practices': f"Please analyze the following Python code and suggest improvements according to Python best practices:\n\n{code}",
+        'security': f"Please analyze the following Python code for any security vulnerabilities and provide suggestions:\n\n{code}"
+    }
+    return prompts.get(review_type, f"Please analyze the following Python code:\n\n{code}")
+
+# Function to call AI model for code analysis
+def analyze_code(code, review_type):
+    try:
+        prompt = get_review_prompt(code, review_type)
+        response = openai.Completion.create(
+            engine="text-davinci-003",  # Or use the preferred engine like GPT-4
+            prompt=prompt,
+            max_tokens=500,
+            temperature=0.5
+        )
+        analysis = response.choices[0].text.strip()
+        return analysis
+    except Exception as e:
+        return f"An error occurred while analyzing the code: {e}"
+
+# Streamlit app interface
+st.title("AI-Powered Code Reviewer")
+
+# Code input by user
+user_code = st.text_area("Paste your Python code here:")
+
+# Review type selection
+review_type = st.selectbox(
+    "Select the type of review you want:",
+    ("syntax", "optimization", "best_practices", "security")
 )
 
-st.title("🚀 AI Python Code Reviewer")
-st.write("Submit your Python code for an automated review and receive a bug report with suggested fixes.")
+# Button to submit code for review
+if st.button("Review Code"):
+    if user_code:
+        st.write("Analyzing code...")
+        feedback = analyze_code(user_code, review_type)
+        st.subheader("Feedback from AI:")
+        st.write(feedback)
+    else:
+        st.error("Please paste some code to analyze.")
 
-# Retrieve API key from environment variable (make sure the key in your .env file is named GOOGLE_API_KEY)
-API_KEY = os.getenv("GOOGLE_API_KEY")
-
-if not API_KEY:
-    st.error("⚠️ API Key not found. Please set it as an environment variable (e.g., GOOGLE_API_KEY).")
-    st.stop()
-
-# Configure the generative AI with the API key (using the string stored in API_KEY)
-genai.configure(api_key=API_KEY)
-
-PROMPTS = {
-    "Standard Review": "...",
-    "Performance Optimization": "...",
-    "Security Analysis": "...",
-    "Beginner Friendly": "..."
-}
-
-def code_review(code, review_type, model_version):
-    try:
-        model = genai.GenerativeModel(model_name=model_version)
-        user_prompt = f"{PROMPTS[review_type]}\n\nReview the following Python code:\n\n```python\n{code}\n```"
-        response = model.generate_content(user_prompt)
-        return response.text.strip() if response.text else "⚠️ No response received from AI. Try again."
-    except Exception as e:
-        return f"⚠️ Error: {str(e)}"
-
-col1, col2 = st.columns([3, 1])
-
-with col2:
-    model_version = st.selectbox("Select AI Model:", ["gemini-1.5-pro", "gemini-1.5-flash"])
-    review_type = st.selectbox("Select Review Type:", list(PROMPTS.keys()))
-
-with col1:
-    code_input = st.text_area("Enter your Python code:", height=300, placeholder="Paste your Python code here...")
-    if st.button("🔍 Review Code") and code_input.strip():
-        st.markdown(code_review(code_input, review_type, model_version))
-
-st.sidebar.info("AI Python Code Reviewer uses Google's Gemini AI to analyze Python code.")

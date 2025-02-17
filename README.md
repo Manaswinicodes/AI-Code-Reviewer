@@ -14,7 +14,7 @@ An AI-powered code review tool using Google Gemini Pro and Jupyter Notebook.
    cd AI_Code_Reviewer
 
 -> Install Dependencies:
-pip install google-generativeai ipywidgets
+ pip install google-generativeai ipywidgets
 
 -> Run Jupyter Notebook:
 jupyter notebook

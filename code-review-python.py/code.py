@@ -15,16 +15,15 @@ st.set_page_config(
 st.title("🚀 AI Python Code Reviewer")
 st.write("Submit your Python code for an automated review and receive a bug report with suggested fixes.")
 
-# Retrieve API key from environment variable
-API_KEY = os.getenv("GOOGLE_API_KEY")  # Ensure that the key is set in your .env file as GOOGLE_API_KEY
+# Retrieve API key from environment variable (make sure the key in your .env file is named GOOGLE_API_KEY)
+API_KEY = os.getenv("GOOGLE_API_KEY")
 
-# Check if API key exists, if not show error
 if not API_KEY:
-    st.error("⚠️ API Key not found. Please set it as an environment variable. Example: GOOGLE_API_KEY=AIzaSyDpglMCYn9pQO7A1oP_bXcesgaE7f2nh-g")
+    st.error("⚠️ API Key not found. Please set it as an environment variable (e.g., GOOGLE_API_KEY).")
     st.stop()
 
-
-genai.configure(api_key=AIzaSyDpglMCYn9pQO7A1oP_bXcesgaE7f2nh-g)
+# Configure the generative AI with the API key (using the string stored in API_KEY)
+genai.configure(api_key=API_KEY)
 
 PROMPTS = {
     "Standard Review": "...",
@@ -50,7 +49,7 @@ with col2:
 
 with col1:
     code_input = st.text_area("Enter your Python code:", height=300, placeholder="Paste your Python code here...")
-    if st.button("🔄 Review Code") and code_input.strip():
+    if st.button("🔍 Review Code") and code_input.strip():
         st.markdown(code_review(code_input, review_type, model_version))
 
 st.sidebar.info("AI Python Code Reviewer uses Google's Gemini AI to analyze Python code.")

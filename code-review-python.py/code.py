@@ -1,7 +1,16 @@
-import openai
 import streamlit as st
 
-# Set API key for OpenAI
+# Check if the openai package is installed
+try:
+    import openai
+except ImportError:
+    st.error(
+        "The 'openai' package is not installed. "
+        "Please install it using 'pip install openai' and restart the app."
+    )
+    st.stop()  # Stop further execution if openai is missing
+
+# Set API key for OpenAI (Consider using environment variables for security)
 openai.api_key = 'your-api-key'
 
 # Function to generate prompt based on review type
@@ -19,7 +28,7 @@ def analyze_code(code, review_type):
     try:
         prompt = get_review_prompt(code, review_type)
         response = openai.Completion.create(
-            engine="text-davinci-003",  # Or use the preferred engine like GPT-4
+            engine="text-davinci-003",  # Adjust the engine as needed (e.g., GPT-4)
             prompt=prompt,
             max_tokens=500,
             temperature=0.5
@@ -50,4 +59,3 @@ if st.button("Review Code"):
         st.write(feedback)
     else:
         st.error("Please paste some code to analyze.")
-

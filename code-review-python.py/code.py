@@ -15,7 +15,7 @@ st.set_page_config(
 st.title("🚀 AI Python Code Reviewer")
 st.write("Submit your Python code for an automated review and receive a bug report with suggested fixes.")
 
-API_KEY = os.getenv("GOOGLE_API_KEY")
+API_KEY = os.getenv("AIzaSyDpglMCYn9pQO7A1oP_bXcesgaE7f2nh-g")
 if not API_KEY:
     st.error("\u26a0\ufe0f API Key not found. Please set it as an environment variable.")
     st.stop()

@@ -20,7 +20,7 @@ if not API_KEY:
     st.error("\u26a0\ufe0f API Key not found. Please set it as an environment variable.")
     st.stop()
 
-genai.configure(api_key=API_KEY)
+genai.configure(api_key=AIzaSyDpglMCYn9pQO7A1oP_bXcesgaE7f2nh-g)
 
 PROMPTS = {
     "Standard Review": "...",

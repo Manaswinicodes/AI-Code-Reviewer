@@ -1,32 +1,56 @@
-# AI-Code-Reviewer
+AI Python Code Reviewer
 
-An AI-powered code review tool using Google Gemini Pro and Jupyter Notebook.
+* This project is an AI-powered Python code reviewer built with Streamlit and Google Gemini AI, designed by Manaswini Sharma to analyze Python code, identify potential issues, and suggest improvements.
+
 
 -> Features
-- Reviews Python code for bugs, inefficiencies, and best practices.
-- Provides detailed feedback and optimization suggestions.
-- Interactive Jupyter Notebook interface.
+
+* Automated Python Code Review
+* Multiple Review Modes: Standard, Performance, Security, Beginner Friendly
+* Google Gemini AI Integration
+* Streamlit UI
+
 
 -> Installation
-1. Clone this repository:
-   ```sh
-   git clone https://github.com/Manaswinicodes/AI_Code_Reviewer.git
-   cd AI_Code_Reviewer
 
--> Install Dependencies:
- pip install google-generativeai ipywidgets
+* git clone https://github.com/manaswinicodes/ai-python-code-reviewer.git
+* cd ai-python-code-reviewer
+* pip install -r requirements.txt
 
--> Run Jupyter Notebook:
-jupyter notebook
+
+-> Create a .env file and add your API key:
+
+* GOOGLE_API_KEY=AIzaSyDpglMCYn9pQO7A1oP_bXcesgaE7f2nh-g
+
+
+-> Run the app:
+
+* streamlit run app.py
+
 
 -> Usage
-* Open AI_Code_Reviewer.ipynb in Jupyter Notebook.
-* Paste your Python code into the text area.
-* Click Review Code to analyze your code.
 
+* Paste your Python code, select the review type, and get instant feedback.
 
--> Technologies Used
-* Python
-* Google Gemini Pro API
-* Jupyter Notebook
-* ipywidgets
+-> Dependencies
+
+* Streamlit 1.31.0
+* Google Generative AI 0.3.2
+* Python Dotenv 1.0.0
+
+-> Future Enhancements
+
+* Support for more languages
+* GitHub integration
+  
+
+-> License
+
+* MIT License
+  
+
+-> Contact
+
+* GitHub: manaswinicodes
+
+Happy Coding! 🚀
